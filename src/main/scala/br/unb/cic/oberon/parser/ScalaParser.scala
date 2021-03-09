@@ -380,6 +380,13 @@ class ParserVisitor {
       stmt = RepeatUntilStmt(condition, repeatUntilStmt)
     }
 
+    override def visitLoopStmt(ctx: OberonParser.LoopStmtContext): Unit = {
+      ctx.stmt.accept(this)
+      val loopStmt = stmt
+
+      stmt = LoopStmt(loopStmt)
+    }
+
     override def visitForStmt(ctx: OberonParser.ForStmtContext): Unit = {
       val visitor = new ExpressionVisitor()
 
