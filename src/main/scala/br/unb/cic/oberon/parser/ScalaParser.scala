@@ -381,10 +381,13 @@ class ParserVisitor {
     }
 
     override def visitLoopStmt(ctx: OberonParser.LoopStmtContext): Unit = {
-      ctx.stmt.accept(this)
-      val loopStmt = stmt
+      ctx.stmt.accept(visitor = this)
+      val block = stmt
+      stmt = LoopStmt(block)
+    }
 
-      stmt = LoopStmt(loopStmt)
+    override def visitExitStmt(ctx: OberonParser.ExitStmtContext): Unit = {
+      stmt = ExitStmt()
     }
 
     override def visitForStmt(ctx: OberonParser.ForStmtContext): Unit = {
